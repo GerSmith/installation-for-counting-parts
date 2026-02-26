@@ -1,0 +1,65 @@
+# config.yaml: Настройки системы подсчёта деталей на конвейере.
+# Разделы группируют настройки по компонентам для удобства редактирования.
+
+camera:
+  type: hikrobot  # 'hikrobot' для промышленной камеры или 'opencv' для веб-камеры/видео-файла
+
+hikrobot_cam:
+  width: 3072  # Ширина разрешения
+  height: 2048  # Высота разрешения
+  pixel_format: BayerRG8  # Формат: BayerRG8 или Mono8
+
+opencv_cam:
+  device_id: 0  # ID USB-камеры (0 — первая)
+  source: device  # 'device' для камеры или 'file' для видео
+  file_path: /path/to/test_video.mp4  # Путь к файлу, если source=file
+
+yolo:
+  enable_detection: false  # true - детекция включена, false - отключена (для отладки)
+  model_path: models/best.pt  # Путь к модели YOLO
+  confidence_threshold: 0.5  # Минимальная уверенность детекции
+  target_class: 0  # ID класса для подсчёта
+
+modbus:
+  port: COM3  # Порт Modbus RTU
+  baudrate: 9600  # Скорость
+  bytesize: 8  # Биты данных
+  parity: "E"  # Паритет: E (even), N (none), O (odd)
+  stopbits: 1  # Стоп-биты
+  timeout: 1.0  # Таймаут ответа (сек)
+  slave_address: 1  # Адрес slave
+
+uart:
+  port: COM19  # Порт UART для RP2040
+  baudrate: 115200  # Скорость
+  timeout: 1  # Таймаут (сек)
+
+roi:
+  coords: [100, 200, 500, 600]  # ROI: [x1, y1, x2, y2] для подсчёта пересечений
+
+rp2040:
+  default_freq: 16  # Частота ШИМ (Гц)
+  default_duty: 40  # Заполнение (%) 
+  commands:
+    on: "1,{freq},{duty}"  # Команда включения
+    off: "0,{freq},{duty}"  # Команда выключения
+
+display:
+  window_size: [800, 600]  # Размер окна: [width, height]
+  show_bbox: true  # Отображать bounding boxes
+  show_count: true  # Отображать счётчик
+  font_size: 1.0  # Масштаб шрифта
+
+control:
+  keys:
+    start_conveyor: w  # Вперед
+    stop_conveyor: ' '  # Стоп
+    reverse_conveyor: s  # Назад
+    increase_speed: d  # Увеличить скорость
+    decrease_speed: a  # Уменьшить скорость
+    vib_on: v  # Вибрация вкл
+    vib_off: b  # Вибрация выкл
+    quit: q  # Выход
+    reset_count: r # Сброс счёта
+  speed_step: 25  # Шаг скорости (об/мин)
+  count_threshold: 10  # Порог деталей для остановки

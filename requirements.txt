@@ -1,0 +1,4 @@
+pyyaml
+pyside6
+opencv-python
+minimalmodbus
